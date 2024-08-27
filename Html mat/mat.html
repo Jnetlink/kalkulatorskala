@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalkulator Skala Peta</title>
+    <link rel="icon" href="https://images.tokopedia.net/img/cache/700/product-1/2015/12/18/230011/230011_dfe97530-c3a8-4c40-aac7-f25fb310e036.jpg" type="image/x-icon"> <!-- Menambahkan favicon -->
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            padding: 20px;
+            max-width: 700px;
+            margin: auto;
+        }
+        h1 {
+            color: #4CAF50;
+            text-align: center;
+        }
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .container label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .container input, .container select {
+            padding: 10px;
+            width: calc(100% - 120px);
+            box-sizing: border-box;
+            display: inline-block;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .container select {
+            width: 100px;
+            margin-left: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            margin-top: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #e7f1e9;
+            border: 1px solid #4CAF50;
+            border-radius: 4px;
+            font-weight: bold;
+            text-align: center;
+        }
+        .explanation {
+            margin-top: 20px;
+            background-color: #fff;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <h1>Mencari Skala Peta</h1>
+    <div class="container">
+        <label for="mapDistance">Jarak Peta:</label>
+        <input type="number" id="mapDistance" placeholder="Masukkan jarak peta" />
+        <select id="mapUnit">
+            <option value="cm">cm</option>
+            <option value="m">m</option>
+            <option value="km">km</option>
+        </select>
+    </div>
+
+    <div class="container">
+        <label for="realDistance">Jarak Sebenarnya:</label>
+        <input type="number" id="realDistance" placeholder="Masukkan jarak sebenarnya" />
+        <select id="realUnit">
+            <option value="cm">cm</option>
+            <option value="m">m</option>
+            <option value="km">km</option>
+        </select>
+    </div>
+
+    <button onclick="calculateScale()">Hitung Skala</button>
+
+    <div class="result" id="result"></div>
+
+    <div class="explanation">
+        <h2>Penjelasan:</h2>
+        <p><strong>1. Masukkan Jarak Peta:</strong> Masukkan jarak peta pada kolom yang disediakan dan pilih satuan yang digunakan (cm, m, km).</p>
+        <p><strong>2. Masukkan Jarak Sebenarnya:</strong> Masukkan jarak sebenarnya yang sesuai dan pilih satuan yang digunakan (cm, m, km).</p>
+        <p><strong>3. Hitung Skala:</strong> Tekan tombol "Hitung Skala" untuk mendapatkan rasio skala peta. Skala akan ditampilkan dalam format 1 : X, di mana X adalah hasil perhitungan skala.</p>
+    </div>
+
+    <div class="footer">
+        <p>Copyright &copy; 2024 Kalkulator Skala Peta. by Julian all right reserved.</p>
+    </div>
+
+    <script>
+        function calculateScale() {
+            const mapDistance = parseFloat(document.getElementById('mapDistance').value);
+            const realDistance = parseFloat(document.getElementById('realDistance').value);
+            const mapUnit = document.getElementById('mapUnit').value;
+            const realUnit = document.getElementById('realUnit').value;
+
+            if (isNaN(mapDistance) || isNaN(realDistance) || mapDistance <= 0 || realDistance <= 0) {
+                document.getElementById('result').innerText = 'Harap masukkan nilai yang valid.';
+                return;
+            }
+
+            let mapDistanceInCm;
+            let realDistanceInCm;
+
+            switch (mapUnit) {
+                case 'm':
+                    mapDistanceInCm = mapDistance * 100;
+                    break;
+                case 'km':
+                    mapDistanceInCm = mapDistance * 100000;
+                    break;
+                case 'cm':
+                default:
+                    mapDistanceInCm = mapDistance;
+                    break;
+            }
+
+            switch (realUnit) {
+                case 'm':
+                    realDistanceInCm = realDistance * 100;
+                    break;
+                case 'km':
+                    realDistanceInCm = realDistance * 100000;
+                    break;
+                case 'cm':
+                default:
+                    realDistanceInCm = realDistance;
+                    break;
+            }
+
+            const scale = Math.round(realDistanceInCm / mapDistanceInCm);
+            document.getElementById('result').innerText = `Skala Peta: 1 : ${scale}`;
+        }
+    </script>
+</body>
+</html>
